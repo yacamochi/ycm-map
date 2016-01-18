@@ -1,7 +1,145 @@
 <!DOCTYPE html>
+
 <html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
-</body>
-</html>
+<head lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+ <meta charset="UTF-8">
+ 
+   <script type="text/javascript" src="jsoneditor.min.js"></script>
+<style type="text/css"></style>
+
+   
+ <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+
+  
+ <script type="text/javascript" src="jszip.min.js"></script>
+  
+ <!--<script type="text/javascript" src="javascripts/dlgrids.js"></script>-->
+
+   
+ <script type="text/javascript" src="dataludi.lic.min.js"></script>
+  
+ <script type="text/javascript" src="dataludi.min.js"></script>
+   
+ <script type="text/javascript" src="ludistyles.js"></script>
+   
+ <script type="text/javascript" src="gridmain.js"></script>
+
+   
+ <title>Black Desert Cooking List</title>
+  
+ <!--<link rel="stylesheet" type="text/css" href="stylesheets/jsoneditor.min.css">-->
+</head>
+
+<body marginwidth="0" marginheight="0">
+
+<div id="dataludigrid">
+  
+ <div id="scripts"></div>
+ 
+ <div id="actions" style="margin-bottom:0px"></div>
+ 
+ <div id="container" style="height:100%;width:100%;position:absolute;">
+ 
+ <div style="position: relative; width: 100%; height: 100%; border-style: none; border-width: 0px; overflow: hidden;">
+<canvas width="1140" height="252" style="position: absolute; left: 0px; top: 0px; border-style: none; 
+border-width: 0px; cursor: default; background: rgb(255, 255, 255);">
+Your browser does not support HTML5 Canvas.</canvas>
+<div spellcheck="false" style="outline: none; position: absolute; z-index: 2000; box-sizing: border-box; 
+overflow: hidden; border: none; width: 0px; height: 0px; padding: 0px; margin: 0px; box-shadow: none; resize: none;">
+<input style="position: absolute; margin: 0px; padding: 0px 1px 0px 2px; font-style: normal; font-variant: normal; 
+font-weight: normal; line-height: normal; word-wrap: normal; overflow: hidden; resize: none; border: none; outline: none;
+text-align: left; color: rgb(68, 84, 106); left: 0px; top: 0px; width: 100%; height: 100%; 
+cursor: text; -webkit-user-modify: read-write-plaintext-only; white-space: pre-wrap; transform: translateZ(0px);">
+</div></div></div>
+</div>
+
+
+<script type="text/javascript">
+    
+DataLudi.setRootContext('/assets');
+    
+DataLudi.setAssetRoot('');
+
+//        
+DataLudi.setAssetRoot = "http://helpme.dataludi.com/assets";
+
+    $(document).ready(function () {
+        
+DataLudi.setDebug(false);
+        
+DataLudi.setTrace(false);
+        
+var columns = JSON.parse(parent.window.arrangeModelGlobal.columns || parent.columns);
+
+        
+var fields = JSON.parse(parent.window.arrangeModelGlobal.fields || parent.fields);
+
+        
+dataProvider = new DataLudi.GridDataSet();
+//        
+dataProvider.setFields(JSON.parse(parent.window.arrangeModelGlobal.fields || parent.fields));
+        
+dataProvider.setFields(fields);
+
+        
+grid = new DataLudi.createGridView('container');
+        
+grid.setDataSource(dataProvider);
+        
+grid.setColumns(columns);
+        
+setOptions(grid);
+//        
+setSkin(); // link to demostyles.js
+//       
+setStyles(grid);
+
+        
+var data = JSON.parse(parent.window.arrangeModelGlobal.rawdata || "[{}]");
+        
+var rows = parent.window.arrangeModelGlobal.rowsAccessor || "";
+
+//        
+dataProvider.fillJsonData(data, {rows: rows});
+
+        
+new DataLudi.DataLoader(dataProvider).load('json', data, { rows: rows });
+
+        
+eval(parent.window.arrangeModelGlobal.scripts);
+
+    });
+
+</script>
+
+<!-- user api -->
+<script>
+    
+function dataSource(num) {
+        return ds(num);
+    }
+
+    function ds(num) {
+        
+return parent.window.arrangeModelGlobal['ds' + num];
+    }
+
+    function exportGrid() {
+        
+new DataLudi.GridExcelExporter().export(grid, {
+            target: "local",
+            
+fileName: parent.window.arrangeModelGlobal['title'] || "local.xlsx",
+            
+rowIndicator: "default",
+            header: "default",
+            footer: "default"
+        });
+    }
+</script>
+
+
+
+</body></html>
